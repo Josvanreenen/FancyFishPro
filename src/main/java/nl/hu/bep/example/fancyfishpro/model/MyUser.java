@@ -1,13 +1,14 @@
 package nl.hu.bep.example.fancyfishpro.model;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -19,12 +20,14 @@ public class MyUser implements UserDetails, Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter @Setter private String username;
+    @Getter @Setter @Column(unique = true)
+    private String username;
     @Getter @Setter private String password;
+
 
     public MyUser(String username, String password){
         this.username=username;
-        this.password=password;
+        this.password=new BCryptPasswordEncoder().encode(password);
     }
 
     @Override
@@ -34,17 +37,17 @@ public class MyUser implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

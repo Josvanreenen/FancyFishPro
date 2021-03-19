@@ -1,24 +1,38 @@
 package nl.hu.bep.example.fancyfishpro.service;
 
+import java.util.ArrayList;
+
+import lombok.extern.log4j.Log4j2;
 import nl.hu.bep.example.fancyfishpro.model.MyUser;
 import nl.hu.bep.example.fancyfishpro.repositories.IUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     private IUserRepository repository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MyUser myUser = repository.findByUsername(username);
-        if (myUser==null){
-            throw new UsernameNotFoundException(username);
+        log.info("got here");
+        MyUser toLogin = repository.findByUsername(username);
+        if(toLogin!=null){
+            log.info("user found");
+            return new User(toLogin.getUsername(), toLogin.getPassword(),
+                    new ArrayList<>());
         }
-        return myUser;
+         else {
+             log.warn("no user found!");
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
     }
 }
