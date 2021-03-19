@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class InitialController {
 
-    @GetMapping ({ "/hello"})
+    @GetMapping ( "/hello")
     public String firstPage(){
         return "Hello FancyFishPro World!";
     }
