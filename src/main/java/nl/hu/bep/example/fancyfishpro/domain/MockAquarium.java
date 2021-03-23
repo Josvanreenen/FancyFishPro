@@ -1,16 +1,34 @@
 package nl.hu.bep.example.fancyfishpro.domain;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AquariumMock implements IAquarium{
+@ToString
+public class MockAquarium implements IAquarium{
+    private int length;
+    private int width;
+    private int height;
+
+    private String waterType;
+    private String beddingType;
+
     @Getter
     private List<IInhabitant> myInhabitants;
 
-    public AquariumMock(){
-        myInhabitants = new ArrayList<IInhabitant>();
+    public MockAquarium(){
+        myInhabitants = new ArrayList<>();
+    }
+
+    public MockAquarium(int length, int width, int height, String waterType, String beddingType){
+        this();
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.waterType = waterType;
+        this.beddingType = beddingType;
     }
     @Override
     public boolean addInhabitant(IInhabitant toAdd) {
