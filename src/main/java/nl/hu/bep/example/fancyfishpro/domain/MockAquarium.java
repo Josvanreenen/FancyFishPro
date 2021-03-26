@@ -2,6 +2,7 @@ package nl.hu.bep.example.fancyfishpro.domain;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;

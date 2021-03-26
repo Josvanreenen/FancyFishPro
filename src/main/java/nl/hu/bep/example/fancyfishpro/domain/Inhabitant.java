@@ -8,4 +8,8 @@ public class Inhabitant implements IInhabitant{
     public Inhabitant(){
         this.name = "unnamed";
     }
+
+    public Inhabitant(String name) {
+        this.name = name;
+    }
 }
